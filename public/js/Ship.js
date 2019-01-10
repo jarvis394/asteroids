@@ -13,6 +13,7 @@ class Ship {
     this.rotAngle = 0
     this.velocity = createVector(0, 0)
     this.boosting = false
+    this.backwards = false
   }
 
   /**
@@ -22,13 +23,13 @@ class Ship {
   draw() {
     push()  // Store current translate()
 
-    noFill()
+    fill(0)
     strokeWeight(4)
     stroke(this.color)
     translate(this.pos.x, this.pos.y)
     rotate(this.head + HALF_PI)
     
-    triangle(-this.size / 2, this.size / 2, this.size / 2, this.size / 2, 0, -this.size / 2)
+    triangle(-this.size / 2, this.size / 2, this.size / 2, this.size / 2, 0, -this.size / 2 - 6)
 
     pop()  // Flush our stored translate() so everything 
            // after drawing ship won't be relative to its position
@@ -66,7 +67,8 @@ class Ship {
    */
   boost() {
     let force = p5.Vector.fromAngle(this.head)
-    force.mult(0.5)
+    if (this.backwards) force.mult(-0.5)
+    else force.mult(0.5)
     this.velocity.add(force)
   }
 
@@ -83,6 +85,10 @@ class Ship {
     // Y
     else if (this.pos.y > h + this.size) this.pos.y = -this.size
     else if (this.pos.y < -this.size) this.pos.y = h + this.size
+  }
+  
+  shoot() {
+    alert()
   }
 
 }
