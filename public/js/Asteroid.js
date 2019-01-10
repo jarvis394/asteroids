@@ -6,12 +6,12 @@ class Asteroid {
     this.size = size ? size : random(70, 120)
     this.velocity = createVector(random(-1, 1), random(-1, 1))
     this._shapeDetail = random(5, 15)
-    this._shapePoints = []
+    this.shapePoints = []
   }
 
   makeShape() {
     for (let i = 0; i < this._shapeDetail; i++) {
-      this._shapePoints[i] = random(-10, 10)
+      this.shapePoints[i] = random(-10, 10)
     }
   }
 
@@ -25,7 +25,7 @@ class Asteroid {
     beginShape()
     for (let i = 0; i < this._shapeDetail; i++) {
       let angle = map(i, 0, this._shapeDetail, 0, TWO_PI)
-      let r = this._shapePoints[i]
+      let r = this.shapePoints[i]
       let x = this.size / 2 * cos(angle) + r
       let y = this.size / 2 * sin(angle) + r
       vertex(x, y)
@@ -49,8 +49,13 @@ class Asteroid {
   break() {
     let splitted = []
 
+    if (this.size / 2 < 20) return []
+
     splitted.push(new Asteroid(w, h, ASTEROID_COLOR, this.pos.copy(), this.size / 2))
     splitted.push(new Asteroid(w, h, ASTEROID_COLOR, this.pos.copy(), this.size / 2))
+
+    splitted[0].shapePoints = this.shapePoints
+    splitted[1].shapePoints = this.shapePoints
 
     return splitted
   }

@@ -86,9 +86,14 @@ class Ship {
     else if (this.pos.y > h + this.size) this.pos.y = -this.size
     else if (this.pos.y < -this.size) this.pos.y = h + this.size
   }
-  
-  shoot() {
-    alert()
+
+  checkCollision(asteroid) {
+    let distance = dist(this.pos.x, this.pos.y, asteroid.pos.x, asteroid.pos.y)
+
+    if (distance < asteroid.size)
+      return true
+    else
+      return false
   }
 
 }
